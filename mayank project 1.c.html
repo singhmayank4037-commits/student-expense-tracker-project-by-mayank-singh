@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Expense Tracker</title>
+<style>
+:root{--bg:#0b0b0d;--panel:#141416;--panel2:#1b1b1f;--gold:#e8bd62;--gold2:#f7d991;--text:#f4f0e7;--muted:#a8a39a;--line:#2d2b27;--red:#ff7777;--green:#77d6a1}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 80% 0%,#292114 0%,transparent 35%),var(--bg);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer}.shell{max-width:1250px;margin:auto;padding:28px 22px 50px}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:30px}.brand{display:flex;gap:13px;align-items:center}.logo{width:48px;height:48px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,var(--gold2),#9b6c20);color:#17130a;font-weight:900;font-size:23px;box-shadow:0 8px 28px #d8a84422}.brand h1{font-size:20px;margin:0;letter-spacing:.2px}.brand p{margin:5px 0 0;color:var(--muted);font-size:12px}.header-right{display:flex;align-items:center;gap:10px}.pill{border:1px solid #4c4027;color:var(--gold2);background:#201a10;padding:9px 13px;border-radius:999px;font-size:12px}
+.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:22px}.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:2px;font-size:11px;font-weight:800}.hero h2{font-size:clamp(27px,4vw,39px);line-height:1.12;margin:10px 0 8px;letter-spacing:-1.1px}.hero p{color:var(--muted);margin:0;font-size:14px}.primary{border:0;border-radius:12px;padding:13px 17px;background:linear-gradient(135deg,var(--gold2),var(--gold));color:#201708;font-weight:800;box-shadow:0 7px 22px #d7a74622}.primary:hover{filter:brightness(1.07);transform:translateY(-1px)}.secondary{border:1px solid #39352d;border-radius:10px;padding:10px 13px;background:#1c1b1a;color:var(--text)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:24px 0}.stat,.panel{background:linear-gradient(145deg,#19191b,#121214);border:1px solid var(--line);border-radius:18px;box-shadow:0 12px 35px #0002}.stat{padding:20px;min-height:133px}.stat-top{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:12px}.stat-icon{width:34px;height:34px;border-radius:11px;background:#2a2317;color:var(--gold);display:grid;place-items:center;font-size:17px}.stat-value{font-size:clamp(21px,2.5vw,29px);font-weight:800;margin-top:18px;letter-spacing:-.6px}.stat-note{font-size:11px;color:var(--muted);margin-top:7px}.gold{color:var(--gold2)}.green{color:var(--green)}.red{color:var(--red)}
+.main-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:16px}.panel{padding:22px}.panel-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}.panel h3{margin:0;font-size:16px}.sub{font-size:12px;color:var(--muted);margin-top:5px}.budget-number{font-size:27px;font-weight:800;margin:12px 0 5px}.progress{height:9px;background:#302d27;border-radius:99px;overflow:hidden;margin:18px 0 10px}.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,#a87826,var(--gold2));border-radius:99px;transition:width .3s}.budget-meta{display:flex;justify-content:space-between;color:var(--muted);font-size:12px}.budget-edit{display:flex;gap:8px;margin-top:18px}.budget-edit input,.field input,.field select,.search{width:100%;min-width:0;background:#0e0e10;color:var(--text);border:1px solid #34312b;border-radius:10px;padding:12px;outline:none}.budget-edit input:focus,.field input:focus,.field select:focus,.search:focus{border-color:var(--gold)}.budget-edit button{white-space:nowrap}.tip{margin-top:17px;padding:12px 13px;background:#211b10;border:1px solid #3d321d;border-radius:11px;color:#e5d3a9;font-size:12px;line-height:1.5}
+.quick-list{display:grid;gap:12px}.quick-item{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:1px solid #29282a}.quick-item:last-child{border:0}.quick-icon{width:40px;height:40px;border-radius:13px;display:grid;place-items:center;background:#24211b;color:var(--gold2);font-size:18px}.quick-info{flex:1;min-width:0}.quick-info strong{display:block;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.quick-info span{display:block;color:var(--muted);font-size:11px;margin-top:5px}.quick-amount{font-weight:800;font-size:13px}
+.expenses-panel{margin-top:16px}.table-tools{display:flex;gap:10px;align-items:center}.search{max-width:230px;padding:10px 12px;font-size:12px}.table-wrap{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:550px}th{text-align:left;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);font-weight:700;padding:12px 10px;border-bottom:1px solid var(--line)}td{padding:15px 10px;border-bottom:1px solid #252427;font-size:13px}tbody tr:last-child td{border-bottom:0}.expense-name{display:flex;align-items:center;gap:10px;font-weight:700}.mini-icon{width:34px;height:34px;border-radius:10px;background:#24211b;display:grid;place-items:center}.category{color:var(--muted);font-size:11px}.amount{font-weight:800;white-space:nowrap}.delete{border:1px solid #463030;background:#211616;color:#ff9d9d;border-radius:8px;padding:7px 9px}.empty{text-align:center;padding:36px 10px;color:var(--muted);font-size:13px}.footer{display:flex;justify-content:space-between;gap:12px;margin-top:22px;color:#77736c;font-size:11px}
+.modal-backdrop{display:none;position:fixed;inset:0;background:#000b;z-index:10;align-items:center;justify-content:center;padding:18px}.modal-backdrop.show{display:flex}.modal{width:min(470px,100%);background:#171719;border:1px solid #49402d;border-radius:20px;padding:24px;box-shadow:0 24px 80px #0008}.modal h3{margin:0 0 6px;font-size:20px}.modal p{margin:0 0 22px;color:var(--muted);font-size:12px}.field{display:grid;gap:7px;margin-bottom:15px}.field label{font-size:12px;color:#d5cfc2}.modal-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:20px}.toast{position:fixed;right:20px;bottom:20px;background:#211b10;border:1px solid #5a4725;color:var(--gold2);padding:13px 17px;border-radius:12px;box-shadow:0 10px 35px #0007;opacity:0;transform:translateY(10px);transition:.25s;pointer-events:none;font-size:13px;z-index:20}.toast.show{opacity:1;transform:translateY(0)}
+@media(max-width:850px){.stats{grid-template-columns:repeat(2,1fr)}.main-grid{grid-template-columns:1fr}.hero{align-items:flex-start;flex-direction:column}.hero .primary{width:100%}}
+@media(max-width:520px){.shell{padding:18px 13px 35px}.header-right .pill{display:none}.brand h1{font-size:17px}.stat{padding:15px;min-height:120px}.stat-value{font-size:22px}.panel{padding:16px}.panel-head{align-items:flex-start;flex-direction:column}.table-tools{width:100%}.search{max-width:none}.budget-edit{flex-direction:column}.footer{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+  <div class="brand"><div class="logo">₹</div><div><h1>Smart Expense Tracker</h1><p>PERSONAL FINANCE DASHBOARD</p></div></div>
+  <div class="header-right"><span class="pill">● LOCAL DEMO</span><button class="secondary" id="resetBtn" title="Clear demo data">Reset data ↺</button></div>
+</header>
+<section class="hero">
+  <div><div class="eyebrow">Your money, in focus</div><h2>Spend smarter.<br><span class="gold">Stay in control.</span></h2><p>Track expenses, manage your monthly budget, and see where your money goes.</p></div>
+  <button class="primary" id="openModal">＋ Add new expense</button>
+</section>
+<section class="stats">
+  <div class="stat"><div class="stat-top"><span>Monthly budget</span><span class="stat-icon">◈</span></div><div class="stat-value" id="budgetStat">₹0.00</div><div class="stat-note">Your spending limit</div></div>
+  <div class="stat"><div class="stat-top"><span>Total spending</span><span class="stat-icon">↗</span></div><div class="stat-value" id="spentStat">₹0.00</div><div class="stat-note" id="spentNote">Across all expenses</div></div>
+  <div class="stat"><div class="stat-top"><span>Remaining budget</span><span class="stat-icon">◎</span></div><div class="stat-value green" id="remainingStat">₹0.00</div><div class="stat-note">Budget minus spending</div></div>
+  <div class="stat"><div class="stat-top"><span>Expenses logged</span><span class="stat-icon">▤</span></div><div class="stat-value" id="countStat">0</div><div class="stat-note">Items recorded</div></div>
+</section>
+<section class="main-grid">
+  <div class="panel">
+    <div class="panel-head"><div><h3>Budget overview</h3><div class="sub">Keep an eye on your monthly limit</div></div><span class="pill" id="budgetStatus">ON TRACK</span></div>
+    <div class="sub">Monthly budget</div><div class="budget-number" id="budgetLarge">₹0.00</div>
+    <div class="progress"><span id="progressBar"></span></div>
+    <div class="budget-meta"><span id="usedText">₹0 spent</span><span id="percentText">0% used</span></div>
+    <div class="budget-edit"><input id="budgetInput" type="number" min="0" step="0.01" placeholder="Enter monthly budget (₹)"><button class="primary" id="saveBudget">Update budget</button></div>
+    <div class="tip" id="budgetTip">✦ Set your monthly budget to get started. Your spending summary updates automatically.</div>
+  </div>
+  <div class="panel">
+    <div class="panel-head"><div><h3>Recent activity</h3><div class="sub">Your latest recorded expenses</div></div><span class="gold" style="font-size:12px">LATEST</span></div>
+    <div class="quick-list" id="recentList"><div class="empty">No expenses yet. Add your first expense to see it here.</div></div>
+  </div>
+</section>
+<section class="panel expenses-panel">
+  <div class="panel-head"><div><h3>All expenses</h3><div class="sub">Review and manage every transaction</div></div><div class="table-tools"><input class="search" id="searchInput" placeholder="Search expenses…"><button class="secondary" id="exportBtn">Export CSV ↓</button></div></div>
+  <div class="table-wrap"><table><thead><tr><th>Expense</th><th>Category</th><th>Date</th><th>Amount</th><th>Action</th></tr></thead><tbody id="expenseRows"></tbody></table><div id="emptyState" class="empty">Your expense list is empty. Click “Add new expense” to begin.</div></div>
+</section>
+<div class="footer"><span>SMART EXPENSE TRACKER · C PROJECT WEB DEMO</span><span>Demo data is saved in this browser only.</span></div>
+</div>
+<div class="modal-backdrop" id="modalBackdrop">
+  <form class="modal" id="expenseForm">
+    <h3>Add an expense</h3><p>Record a purchase to update your dashboard.</p>
+    <div class="field"><label for="expenseName">Expense name</label><input id="expenseName" maxlength="80" required placeholder="e.g. Groceries, Bus pass"></div>
+    <div class="field"><label for="expenseAmount">Amount (₹)</label><input id="expenseAmount" type="number" min="0.01" step="0.01" required placeholder="0.00"></div>
+    <div class="field"><label for="expenseCategory">Category</label><select id="expenseCategory"><option>Food</option><option>Transport</option><option>Shopping</option><option>Bills</option><option>Education</option><option>Entertainment</option><option>Health</option><option>Other</option></select></div>
+    <div class="field"><label for="expenseDate">Date</label><input id="expenseDate" type="date" required></div>
+    <div class="modal-actions"><button type="button" class="secondary" id="cancelModal">Cancel</button><button type="submit" class="primary">Save expense</button></div>
+  </form>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const $ = id => document.getElementById(id);
+const fmt = n => new Intl.NumberFormat('en-IN',{style:'currency',currency:'INR'}).format(Number(n)||0);
+const today = () => new Date().toISOString().slice(0,10);
+let data = {budget: 10000, expenses: []};
+try { const saved = localStorage.getItem('smartExpenseTrackerV1'); if(saved) data = {...data,...JSON.parse(saved)}; } catch(e) {}
+function persist(){ try{localStorage.setItem('smartExpenseTrackerV1',JSON.stringify(data));}catch(e){} }
+function total(){return data.expenses.reduce((s,e)=>s+Number(e.amount),0)}
+function iconFor(cat){return ({Food:'🍽️',Transport:'🚌',Shopping:'🛍️',Bills:'💡',Education:'📚',Entertainment:'🎬',Health:'💊',Other:'🧾'})[cat]||'🧾'}
+function showToast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2300)}
+function render(){
+ const spent=total(), remaining=data.budget-spent, pct=data.budget>0?Math.min(100,spent/data.budget*100):0;
+ $('budgetStat').textContent=fmt(data.budget);$('budgetLarge').textContent=fmt(data.budget);$('spentStat').textContent=fmt(spent);
+ $('remainingStat').textContent=fmt(remaining);$('remainingStat').className='stat-value '+(remaining<0?'red':'green');
+ $('countStat').textContent=data.expenses.length;$('spentNote').textContent=data.expenses.length+' transaction'+(data.expenses.length===1?'':'s');
+ $('progressBar').style.width=pct+'%';$('progressBar').style.background=spent>data.budget?'linear-gradient(90deg,#a83232,#ff7777)':'linear-gradient(90deg,#a87826,#f7d991)';
+ $('usedText').textContent=fmt(spent)+' spent';$('percentText').textContent=(data.budget>0?Math.round(spent/data.budget*100):0)+'% used';
+ const over=spent>data.budget; $('budgetStatus').textContent=over?'OVER BUDGET':(pct>=80?'NEAR LIMIT':'ON TRACK');
+ $('budgetStatus').style.color=over?'#ff7777':(pct>=80?'#f7d991':'#77d6a1');
+ $('budgetTip').textContent=over?'⚠ You are '+fmt(spent-data.budget)+' over your budget. Review your expenses before adding more.':(pct>=80?'✦ You have used most of your budget. Keep an eye on upcoming expenses.':'✦ '+fmt(Math.max(0,remaining))+' left to spend this month. Keep going!');
+ const recent=[...data.expenses].slice(-3).reverse();
+ $('recentList').innerHTML=recent.length?recent.map(e=>`<div class="quick-item"><div class="quick-icon">${iconFor(e.category)}</div><div class="quick-info"><strong>${escapeHtml(e.name)}</strong><span>${escapeHtml(e.category)} · ${escapeHtml(e.date)}</span></div><div class="quick-amount">${fmt(e.amount)}</div></div>`).join(''):'<div class="empty">No expenses yet. Add your first expense to see it here.</div>';
+ renderTable();
+}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderTable(){
+ const q=$('searchInput').value.trim().toLowerCase();
+ const rows=data.expenses.map((e,i)=>({...e,index:i})).filter(e=>(e.name+' '+e.category+' '+e.date).toLowerCase().includes(q)).reverse();
+ $('expenseRows').innerHTML=rows.map(e=>`<tr><td><div class="expense-name"><span class="mini-icon">${iconFor(e.category)}</span>${escapeHtml(e.name)}</div></td><td><span class="category">${escapeHtml(e.category)}</span></td><td>${escapeHtml(e.date)}</td><td class="amount">${fmt(e.amount)}</td><td><button class="delete" data-delete="${e.index}" aria-label="Delete ${escapeHtml(e.name)}">Delete</button></td></tr>`).join('');
+ $('emptyState').style.display=rows.length?'none':'block';
+}
+function openModal(){$('modalBackdrop').classList.add('show');$('expenseDate').value=today();$('expenseName').focus()}
+function closeModal(){$('modalBackdrop').classList.remove('show')}
+$('openModal').addEventListener('click',openModal);$('cancelModal').addEventListener('click',closeModal);
+$('modalBackdrop').addEventListener('click',e=>{if(e.target===$('modalBackdrop'))closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+$('expenseForm').addEventListener('submit',e=>{
+ e.preventDefault();const name=$('expenseName').value.trim(),amount=Number($('expenseAmount').value),category=$('expenseCategory').value,date=$('expenseDate').value;
+ if(!name||!Number.isFinite(amount)||amount<=0||!date){showToast('Please enter valid expense details.');return}
+ data.expenses.push({name,amount,category,date});persist();render();e.target.reset();closeModal();showToast('Expense added successfully!');
+});
+$('saveBudget').addEventListener('click',()=>{const b=Number($('budgetInput').value);if($('budgetInput').value.trim()===''||!Number.isFinite(b)||b<0){showToast('Enter a valid budget amount.');return}data.budget=b;persist();render();$('budgetInput').value='';showToast('Monthly budget updated.')});
+$('searchInput').addEventListener('input',renderTable);
+$('expenseRows').addEventListener('click',e=>{const btn=e.target.closest('[data-delete]');if(!btn)return;const i=Number(btn.dataset.delete);if(confirm('Delete this expense?')){data.expenses.splice(i,1);persist();render();showToast('Expense deleted.')}});
+$('exportBtn').addEventListener('click',()=>{if(!data.expenses.length){showToast('There are no expenses to export yet.');return}const csv=[['Name','Category','Date','Amount'],...data.expenses.map(e=>[e.name,e.category,e.date,e.amount])].map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));a.download='smart-expenses.csv';a.click();URL.revokeObjectURL(a.href);showToast('CSV export started.')});
+$('resetBtn').addEventListener('click',()=>{if(confirm('Reset the budget and delete all saved expenses from this browser?')){data={budget:10000,expenses:[]};persist();render();showToast('Demo data reset.')}});
+render();
+</script>
+</body>
+</html>
